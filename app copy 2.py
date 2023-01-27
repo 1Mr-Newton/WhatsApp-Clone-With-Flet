@@ -27,17 +27,13 @@ class App(UserControl):
   def __init__(self,pg:Page):
     super().__init__()
     self.pg = pg
-    # self.pg.window_bgcolor = colors.TRANSPARENT
-    # self.pg.bgcolor = colors.TRANSPARENT
-    # self.pg.window_title_bar_hidden = True
-    # self.pg.window_frameless = True
     self.containers_init()
     self.init_helper()
 
   def load_chat_dummy(self):
-    for n in range(50):
-      self.chats_contents_column.controls.append(self.chat_row) 
-    #   self.chats_contents_column.update()  
+    # for n in range(5):
+      # self.chats_contents_column.controls.append(self.chat_row) 
+      # self.chats_contents_column.update()  
     pass  
 
 
@@ -59,11 +55,13 @@ class App(UserControl):
                 self.dm_screen,
               ]
             ),
-            
-            self.settings_popup,
+            Container(
+              expand=True,
+              content=Stack(),
+              # height=20
 
-            self.emoji_popup
-            
+              # bgcolor='green'
+            ),
             
           ]
         )
@@ -230,7 +228,6 @@ class App(UserControl):
           controls=[
             Container(
               on_hover=self.sidebar_btn_hovered,
-              on_click=self.show_settings_popup,
               alignment=alignment.center,
               height=s_btn_h,
               width=s_btn_w,
@@ -251,7 +248,6 @@ class App(UserControl):
 
             Container(
               on_hover=self.sidebar_btn_hovered,
-              on_click=self.show_settings_popup,
               alignment=alignment.center,
               height=s_btn_h,
               width=s_btn_w,
@@ -463,86 +459,85 @@ class App(UserControl):
 
   def chats_column_f(self):
     self.chat_row = Container(
-      bgcolor='red',
-      height=70,
-      padding=padding.only(left=10,right=10),
-      content=Container(
-        border_radius=ih_br,
-        on_hover=self.sidebar_btn_hovered,
-        content=Row(
-          spacing=0,
-          alignment='spaceBetween',
-          vertical_alignment='center',
-          controls=[
-            Container(
-              height=50,
-              width=50,
-              bgcolor='blue',
-              border_radius=30
-            ),
-            
-            Column(
-              alignment='center',
-              horizontal_alignment='center',
-              controls=[
-                Container(
-                  width=200,
-                  content=Row(
-                      alignment='spaceBetween',
-                      # vertical_alignment='center',
+                  height=70,
+                  padding=padding.only(left=10,right=10),
+                  content=Container(
+                    border_radius=ih_br,
+                    on_hover=self.sidebar_btn_hovered,
+                    content=Row(
                       spacing=0,
+                      alignment='spaceBetween',
+                      vertical_alignment='center',
                       controls=[
                         Container(
-                          clip_behavior=ClipBehavior.ANTI_ALIAS,
-                          width=120,
-                          content=Text(
-                          'Some long name that will overflow',
-                          no_wrap=True
+                          height=50,
+                          width=50,
+                          bgcolor='blue',
+                          border_radius=30
                         ),
-                        ),
-                        Text(
-                          '12:20AM'
-                        ),
+                        
+                        Column(
+                          alignment='center',
+                          horizontal_alignment='center',
+                          controls=[
+                            Container(
+                              width=200,
+                              content=Row(
+                                  alignment='spaceBetween',
+                                  # vertical_alignment='center',
+                                  spacing=0,
+                                  controls=[
+                                    Container(
+                                      clip_behavior=ClipBehavior.ANTI_ALIAS,
+                                      width=120,
+                                      content=Text(
+                                      'Some long name that will overflow',
+                                      no_wrap=True
+                                    ),
+                                    ),
+                                    Text(
+                                      '12:20AM'
+                                    ),
+                                  ]
+                                ),
+                            ),
+                            
+                            
+
+
+                            Container(
+                              width=200,
+                              content=Row(
+                                  alignment='spaceBetween',
+                                  # vertical_alignment='center',
+                                  spacing=0,
+                                  controls=[
+                                    Container(
+                                      clip_behavior=ClipBehavior.ANTI_ALIAS,
+                                      width=120,
+                                      content=Text(
+                                      'Some long name that will overflow',
+                                      no_wrap=True
+                                    ),
+                                    ),
+                                    Text(
+                                      '12:20AM'
+                                    ),
+                                  ]
+                                ),
+                            ),
+                            
+                            
+
+                            
+
+                          ]
+                        )
                       ]
-                    ),
-                ),
-                
-                
+                    )
+                  )
 
-
-                Container(
-                  width=200,
-                  content=Row(
-                      alignment='spaceBetween',
-                      # vertical_alignment='center',
-                      spacing=0,
-                      controls=[
-                        Container(
-                          clip_behavior=ClipBehavior.ANTI_ALIAS,
-                          width=120,
-                          content=Text(
-                          'Some long name that will overflow',
-                          no_wrap=True
-                        ),
-                        ),
-                        Text(
-                          '12:20AM'
-                        ),
-                      ]
-                    ),
-                ),
-                
-                
-
-                
-
-              ]
-            )
-          ]
-        )
-      )
-
-    )
+                )
             
     self.chats_contents_column = Column(
               scroll='auto',
@@ -563,21 +558,20 @@ class App(UserControl):
   def show_msg_menu(self,e:LongPressEndEvent):
     print(e.target)
 
-  
-  def hide_emojis_popup(self,e):
-    self.emoji_popup.offset = transform.Offset(0,1.5)
-    self.emoji_popup.update()
-    sleep(0.51)
-    self.emoji_popup.height = 0
-    self.emoji_popup.update()
-  
-  def show_emojis_popup(self,e):
-    self.emoji_popup.height = None
-    self.emoji_popup.offset = transform.Offset(0,0)
-    self.emoji_popup.update()
+  def testtest(self,e:TapEvent):
+    print(self.chats_screen.width)
+    # x = 5-((self.show_test.width*25)/e.global_x)
+    # self.show_test.offset = transform.Offset(x,13.7) 
 
+    # self.show_test.update()
 
   def chat_user_details(self):
+    # self.show_test = Container(
+    #   on_click=self.testtest,
+    #   height=50,width=200,bgcolor='red',
+    #   # top=0,right=0
+    # )
+          
 
     self.chat_user_details_sidebar_item_info =  Container(
                                   expand=True,
@@ -789,115 +783,8 @@ class App(UserControl):
                                     ]
                                   )
                                 )
-
+                              
     
-
-    self.settings_sidebar_details_column =  Container(
-        expand=True,
-        padding=15,
-        content=Column(
-          # expand=True,
-          height=475,
-          scroll='auto',
-          controls=[
-            Row(
-              alignment='center',
-              controls=[
-                Container(
-                  alignment=alignment.center,
-                  height=100,
-                  width=100,
-                  border_radius=80,
-                  bgcolor='white12',
-                  content=Icon(
-                    icons.PERSON,
-                    size=50
-                  ),
-                ),
-              ]
-            ),
-            Row(
-              alignment='spaceBetween',
-              controls=[
-                # Text(
-                #   'Mr. Newton😊',
-                  # size=20,
-                #   weight=FontWeight.W_600
-                # ),
-                TextField(
-                  width=200,
-                  value='Mr. Newton😊',
-                  text_size=20,
-                  border=InputBorder.NONE
-                ),
-                Container(
-                  margin=margin.only(right=15),
-                  on_hover=self.sidebar_btn_hovered,
-                  border_radius=ih_br,
-                  height=35,
-                  width=35,
-                  content=Icon(
-                    icons.EDIT_OUTLINED,
-                    size=14,
-                    color=sb_ic
-                  )
-                )
-              ]
-            ),
-            
-            Text(
-              'About',
-              size=14,
-              weight=FontWeight.W_300,
-              color='white24',
-            ),
-            Row(
-              alignment='spaceBetween',
-              controls=[
-                TextField(
-                  width=250,
-                  multiline=True,
-                  value='Hey there! WhatsApp is using me!',
-                  text_size=14,
-                  border=InputBorder.NONE,
-                  text_style=TextStyle(
-                    size=14,
-                    weight=FontWeight.W_400,
-                    color='#CCffffff',
-
-                  )
-                ),
-                Container(
-                  margin=margin.only(right=15),
-                  on_hover=self.sidebar_btn_hovered,
-                  border_radius=ih_br,
-                  height=35,
-                  width=35,
-                  content=Icon(
-                    icons.EDIT_OUTLINED,
-                    size=14,
-                    color=sb_ic
-                  )
-                )
-              ]
-            ),
-            Text(
-              'Phone number',
-              size=14,
-              weight=FontWeight.W_300,
-              color='white24',
-            ),
-            Text(
-              '+233 548 007 499',
-              size=14,
-              weight=FontWeight.W_400,
-              color='#CCffffff',
-            ),
-          ]
-        )
-      )
-
-
     self.chat_user_details_sidebar_item  =  Container(
       bgcolor=s_btn_h_c,
       height=35,
@@ -937,49 +824,7 @@ class App(UserControl):
         ]
       ),
     )
-                       
-    
-    self.settings_sidebar_item  =  Container(
-      bgcolor=s_btn_h_c,
-      height=35,
-      border_radius=ih_br,
-
-      content=Row(
-        spacing=12,
-        # alignment='spaceBetween',
-        vertical_alignment='center',
-        controls=[
-          Container(
-            offset=transform.Offset(0, 0),
-            animate_offset=animation.Animation(1000),
-            clip_behavior=ClipBehavior.ANTI_ALIAS,
-            height=17,
-            width=3,
-            bgcolor=ic,
-            border_radius=5
-          ),
-          
-          Row(
-            vertical_alignment='center',
-            spacing=10,
-            controls = [
-              Image(
-                        src='assets/icons/info.png',
-                        color=sb_ic,
-                        # scale=0.5
-                      ),
-              Text(
-                'Overview'
-              )      
-          ]
-        ),
-        
-        
-        ]
-      ),
-    )
-
-
+   
     self.chat_user_popup = Container(
       offset=transform.Offset(0,-1),
       clip_behavior=ClipBehavior.ANTI_ALIAS,
@@ -1068,20 +913,21 @@ class App(UserControl):
       )
     )
 
+
+
    
     self.settings_popup = Container(
-      border_radius=ih_br,
-      bottom=30,
-      left=80,
-      height=0,
-      offset=transform.Offset(0,1.5),
+      bottom=0,
+      left=-20,
+      # offset=transform.Offset(0,-1),
+      # clip_behavior=ClipBehavior.ANTI_ALIAS,
+      # height=0,
       animate_offset=animation.Animation(500,'decelerate'),
       bgcolor=sbc,
       content=Card(
         expand=True,
         elevation=15,
         content=Container(
-          border_radius=ih_br,
           height=500,
           width=500,
           bgcolor=sbc,
@@ -1099,42 +945,13 @@ class App(UserControl):
                       expand=True,
                       scroll='auto',
                       controls=[
-                        self.settings_sidebar_item,
+                        self.chat_user_details_sidebar_item,
                       ]
                     ),
                     Column(
                       controls=[
                         Container(
-                          on_click=self.close_settings_popup,
-                          bgcolor=s_btn_h_c,
-                          height=35,
-                          border_radius=ih_br,
-
-                          content=Row(
-                            alignment='center',
-                            vertical_alignment='center',
-                            controls=[
-                              Row(
-                                vertical_alignment='center',
-                                spacing=10,
-                                controls = [
-                                  Image(
-                                    src='assets/icons/info.png',
-                                    color=sb_ic,
-                                    # scale=0.5
-                                  ),
-                                  Text(
-                                    'Profile'
-                                  )      
-                              ]
-                            ),
-                            
-                            
-                            ]
-                          ),
-                        ),
-                        Container(
-                          on_click=self.close_settings_popup,
+                          on_click=self.close_chat_user_popup,
                           bgcolor=s_btn_h_c,
                           height=35,
                           border_radius=ih_br,
@@ -1161,8 +978,8 @@ class App(UserControl):
                             
                             ]
                           ),
-                        ),
-                     
+                        )
+                      ,
                       ]
                     )
                     
@@ -1176,7 +993,7 @@ class App(UserControl):
                 controls=[
                   Stack(
                     controls=[
-                      self.settings_sidebar_details_column
+                      self.chat_user_details_sidebar_item_info
                     ]
                   )
                 ]
@@ -1189,136 +1006,6 @@ class App(UserControl):
       )
     )
 
-
-    self.emoji_popup = Container(
-      animate_offset=animation.Animation(500,'decelerate'),
-      border_radius=ih_br,
-      bottom=50,
-      left=120,
-      height=0,
-      offset=transform.Offset(0,1.5),
-      content=Stack(
-        controls=[
-          Card(
-            expand=True,
-            elevation=30,
-            height=380,
-            width=500,
-          ),
-          
-            Container(
-              padding=padding.only(top=10,left=10,right=10),
-              border_radius = ih_br,
-              height=400,
-              width=500,
-              bgcolor=csc,
-              
-              content=Column(
-                controls=[
-                  Row(
-                    alignment='spaceBetween',
-                    controls=[
-                      
-                      Row(
-                        controls=[
-                          Text(
-                            'Emoji',
-                            size=16
-                          ),
-                          Text(
-                            'GIFs',
-                            size=16,
-                            color='white24',
-                          ),
-                          Text(
-                            'Stickers',
-                            size=16,
-                            color='white24',
-                          ),
-                        ]
-                      ),
-
-                      Container(
-                        on_click=self.hide_emojis_popup,
-                        height=20,width=20,border_radius=ih_br,bgcolor='white12',content=Icon(
-                          icons.CLOSE,
-                          size=12,
-
-                        )
-                      )
-                    ]
-                  ),
-
-                  
-                  Container(
-                    height=35,
-                    bgcolor=sbc,
-                    border_radius = ih_br,
-                    border=border.only(bottom=border.BorderSide(width=1,color=htc)),
-                    content=Row(
-                      alignment='spaceBetween',
-                      controls=[
-                        Container(
-                          padding=padding.only(left=15,top=5),
-                          content=TextField(
-                            border=InputBorder.NONE,
-                            hint_text='Search emojis',
-                            hint_style=TextStyle(
-                              size=14,
-                              font_family='arial',
-                              color=htc
-                            ),
-                            color=sb_ic,
-                            text_style=TextStyle(
-                              size=14,
-                              font_family='arial',
-                              color=sb_ic
-                            ),
-                          ),
-                        ),
-
-                        
-                        Container(
-                          height=25,
-                          width=25,
-                          border_radius=ih_br,
-                          on_hover=self.sidebar_btn_hovered,
-                          content=Icon(
-                            icons.SEARCH_OUTLINED,
-                            size=16,
-                            color=htc
-                          ),
-                        ),
-
-
-                      ]
-                    )
-                  )
-
-                ]
-              )
-            )
-        ]
-      )
-      
-    )
-
-
-
-
-
-  def close_settings_popup(self,e):
-    print('fired')
-    self.settings_popup.offset = transform.Offset(0,1.5)
-    self.settings_popup.update()
-    sleep(0.51)
-    self.settings_popup.height = 0
-    self.settings_popup.update()
-  
-  def show_settings_popup(self,e):
-    self.settings_popup.height = None
-    self.settings_popup.offset = transform.Offset(0,0)
-    self.settings_popup.update()
 
 
 
@@ -1342,7 +1029,6 @@ class App(UserControl):
     self.msg_hover_emoji = PopupMenuButton(
         tooltip=None,
         content=Container(
-          # on_click=
           tooltip=None,
           height=20,
           width=20,
@@ -1585,7 +1271,6 @@ class App(UserControl):
                   controls=[
                     Container(
                       on_hover=self.sidebar_btn_hovered,
-                      on_click=self.show_emojis_popup,
                       alignment=alignment.center,
                       height=40,
                       width=40,
@@ -1645,7 +1330,7 @@ class App(UserControl):
                       ),
                     
                     Container(
-                      # on_click=self.testtest,
+                      on_click=self.testtest,
                       on_hover=self.sidebar_btn_hovered,
                       alignment=alignment.center,
                       height=40,
@@ -1676,7 +1361,15 @@ class App(UserControl):
         Container(
           content=Stack(
             controls=[
+              # Container(
+              #   expand=True,
+              #   # width=600,
+              #   # height=800,
+              #   bgcolor='blue'
+              # ),
               self.chat_user_popup,
+              # self.settings_popup,
+              
             ]
           )
         ),
