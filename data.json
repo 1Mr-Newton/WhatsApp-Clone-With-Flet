@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "name": "newton",
+      "email": "newton@example.com",
+      "phone_number": "+1234567890",
+      "messages":[
+        {
+          "message_id": 1,
+          "message":"Hello,\nCheck out my new stock!",
+          "time":"7:23 AM",
+          "has_media":false,
+          "media_url":"",
+          "to_id": 2,
+          "is_reply":false
+        },
+        {
+          "message":"Hi, How are you?",
+          "time":"2:45 PM",
+          "has_media":false,
+          "media_url":"",
+          "to_id":"5",
+          "is_reply":false
+        }
+      ]
+    },
+    {
+      "user_id": 2,
+      "name": "John",
+      "email": "john@example.com",
+      "phone_number": "+0987654321",
+      "messages":[
+        {
+          "message_id": 2,
+          "message":"Hey bro,\nYou got the package?",
+          "time":"1:10 PM",
+          "has_media":false,
+          "media_url":"",
+          "to_id": 1,
+          "is_reply":false
+        }
+      ]
+    }
+  ]
+}

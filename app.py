@@ -27,18 +27,21 @@ class App(UserControl):
   def __init__(self,pg:Page):
     super().__init__()
     self.pg = pg
-    # self.pg.window_bgcolor = colors.TRANSPARENT
-    # self.pg.bgcolor = colors.TRANSPARENT
-    # self.pg.window_title_bar_hidden = True
-    # self.pg.window_frameless = True
+    # self.pg.window_maximizable = True
+    # self.pg.window_minimizable = True
+
+    
+    self.pg.window_bgcolor = colors.TRANSPARENT
+    self.pg.bgcolor = colors.TRANSPARENT
+    self.pg.window_title_bar_hidden =True
+    self.pg.window_frameless = False
     self.containers_init()
     self.init_helper()
 
   def load_chat_dummy(self):
     for n in range(50):
       self.chats_contents_column.controls.append(self.chat_row) 
-    #   self.chats_contents_column.update()  
-    pass  
+
 
 
   def init_helper(self):
@@ -104,6 +107,20 @@ class App(UserControl):
     else:  
       e.control.bgcolor = None
     e.control.update()  
+  def show_hide_csa(self,e: TapEvent):
+    if e.control.data == 'opened':
+      self.chats_screen.width = 0
+      self.sidebar.bgcolor = csc
+      e.control.data = 'closed'
+    else:
+      self.chats_screen.width = csw
+      self.sidebar.bgcolor = sbc
+      e.control.data = 'opened'
+        
+    e.control.update()    
+    self.sidebar.update()
+    self.chats_screen.update()
+
 
   def sidebar(self):
     self.sidebar_column = Column(
@@ -228,6 +245,26 @@ class App(UserControl):
         Column(
           spacing=5,
           controls=[
+            Container(
+              data = 'opened',
+              on_hover=self.sidebar_btn_hovered,
+              on_click=self.show_hide_csa,
+              alignment=alignment.center,
+              height=s_btn_h,
+              width=s_btn_w,
+              border_radius=5,
+              content=Row(
+                spacing=0,
+                alignment='center',
+                controls=[
+                  Icon(
+                    icons.MENU_OUTLINED,
+                    size=20,
+                    color=sb_ic
+                  )
+                ]
+              )
+            ),
             Container(
               on_hover=self.sidebar_btn_hovered,
               on_click=self.show_settings_popup,
@@ -445,6 +482,7 @@ class App(UserControl):
             
           ]
         ),
+        
         Column(
           controls=[
             Container(), # whatsapp icon
@@ -475,8 +513,12 @@ class App(UserControl):
             Container(
               height=50,
               width=50,
-              bgcolor='blue',
-              border_radius=30
+              border_radius=30,
+              clip_behavior=ClipBehavior.ANTI_ALIAS,
+              content=Image(
+                src='assets/dp.jpg',
+                fit=ImageFit.COVER,
+              )
             ),
             
             Column(
@@ -494,7 +536,7 @@ class App(UserControl):
                           clip_behavior=ClipBehavior.ANTI_ALIAS,
                           width=120,
                           content=Text(
-                          'Some long name that will overflow',
+                          '#Se7en',
                           no_wrap=True
                         ),
                         ),
@@ -519,12 +561,9 @@ class App(UserControl):
                           clip_behavior=ClipBehavior.ANTI_ALIAS,
                           width=120,
                           content=Text(
-                          'Some long name that will overflow',
-                          no_wrap=True
-                        ),
-                        ),
-                        Text(
-                          '12:20AM'
+                            'last message of chat',
+                            no_wrap=True
+                          ),
                         ),
                       ]
                     ),
@@ -561,7 +600,23 @@ class App(UserControl):
   def show_msg_menu(self,e:LongPressEndEvent):
     print(e.target)
 
-  
+  def close_window(self,e):
+    self.pg.window_destroy()
+
+
+  def mini_window(self,e):
+    self.pg.window_minimized = True
+
+    self.pg.update()
+
+
+  def max_window(self,e):
+    self.pg.window_maximized = True
+    self.pg.update()
+    
+
+
+
   def hide_emojis_popup(self,e):
     self.emoji_popup.offset = transform.Offset(0,1.5)
     self.emoji_popup.update()
@@ -1357,11 +1412,26 @@ class App(UserControl):
                   Image(
                     src='assets/icons/laugh.png',
                   ),
-                  Icon(
-                    icons.ABC,
+                  Image(
+                    src='assets/icons/laugh.png',
                   ),
-                  Icon(
-                    icons.ABC,
+                  Image(
+                    src='assets/icons/laugh.png',
+                  ),
+                  Image(
+                    src='assets/icons/laugh.png',
+                  ),
+                  Image(
+                    src='assets/icons/laugh.png',
+                  ),
+                  Image(
+                    src='assets/icons/laugh.png',
+                  ),
+                  Image(
+                    src='assets/icons/laugh.png',
+                  ),
+                  Image(
+                    src='assets/icons/laugh.png',
                   ),
                 ]
               )
@@ -1447,11 +1517,46 @@ class App(UserControl):
           content=Column(
             spacing=0,
             controls=[
-              Container(
-                content=WindowDragArea(
-                  content=Container(height=40)
-                )
+              Row(
+                alignment='spaceBetween',
+                controls=[
+                  WindowDragArea(
+                      expand=True,
+                      content=Container(height=40,)
+                    ),
+                    Row(
+                      spacing=0,
+                      controls=[
+                        Container(
+                          on_click=self.mini_window,
+                          height=40,
+                          width=40,
+                          content=Image(
+                            src='assets/icons/mini.png'
+                          )
 
+                        ),
+                        Container(
+                          on_click=self.max_window,
+                          height=40,
+                          width=40,
+                          content=Image(
+                            src='assets/icons/max.png'
+                          )
+
+                        ),
+                        Container(
+                          on_click=self.close_window,
+                          height=40,
+                          width=40,
+                          content=Image(
+                            src='assets/icons/close.png'
+                          )
+
+                        ),
+                      ]
+                    )
+                ]
               ),
               
               Container(
@@ -1611,7 +1716,7 @@ class App(UserControl):
                         alignment='center',
                         controls=[
                           Icon(
-                            icons.PIN_INVOKE_SHARP,
+                            icons.SHARE_OUTLINED,
                             size=20,
                             color=sb_ic
                           )
