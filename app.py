@@ -264,7 +264,6 @@ class App(UserControl):
                     clip_behavior=ClipBehavior.ANTI_ALIAS,
                     height=20,
                     width=20,
-                    bgcolor='red',
                     border_radius=20,
                     content=Image(
                       src='assets/dp.jpg',
@@ -463,7 +462,6 @@ class App(UserControl):
 
   def chats_column_f(self):
     self.chat_row = Container(
-      bgcolor='red',
       height=70,
       padding=padding.only(left=10,right=10),
       content=Container(
@@ -1450,7 +1448,6 @@ class App(UserControl):
             spacing=0,
             controls=[
               Container(
-                # bgcolor='red',
                 content=WindowDragArea(
                   content=Container(height=40)
                 )
