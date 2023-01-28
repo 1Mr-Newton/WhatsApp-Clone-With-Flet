@@ -1,4 +1,5 @@
 from flet import *
+import json
 wallpaper = 'assets/icons/wallpaper.png'
 w= 1000
 h=800
@@ -39,9 +40,9 @@ class App(UserControl):
     self.init_helper()
 
   def load_chat_dummy(self):
-    for n in range(50):
-      self.chats_contents_column.controls.append(self.chat_row) 
-
+    # for n in range(50):
+    #   self.chats_contents_column.controls.append(self.chat_row) 
+    pass
 
 
   def init_helper(self):
@@ -90,6 +91,7 @@ class App(UserControl):
       content=self.sidebar_column,
     )
     self.chats_screen = Container(
+      animate=animation.Animation(500,AnimationCurve.BOUNCE_OUT),
       width=csw,
       bgcolor=csc,
       content=self.chat_screen_items,
@@ -107,6 +109,7 @@ class App(UserControl):
     else:  
       e.control.bgcolor = None
     e.control.update()  
+  
   def show_hide_csa(self,e: TapEvent):
     if e.control.data == 'opened':
       self.chats_screen.width = 0
@@ -1356,7 +1359,24 @@ class App(UserControl):
       
     )
 
+  def load_messages(self,e):
+    # Read the JSON file
+    with open('data.json', 'r') as file:
+        data = json.load(file)
 
+    # Access the data for a specific user
+    username = "newton"
+    for user_data in data['users']:
+        if user_data["name"] == username:
+            break
+
+    # Access the messages for the user
+    messages = user_data["messages"]
+
+    # Iterate through the messages
+    for message in messages:
+        print(message["message"])
+        
 
 
 
@@ -1392,6 +1412,27 @@ class App(UserControl):
 
 
   def dm_screen_content_main(self):
+    self.send_msg_btn = Container(
+      on_click=self.load_messages,
+      on_hover=self.sidebar_btn_hovered,
+      alignment=alignment.center,
+      height=40,
+      width=40,
+      border_radius=5,
+      content=Row(
+        spacing=0,
+        alignment='center',
+        controls=[
+          Icon(
+            icons.MIC_NONE_OUTLINED,
+            size=20,
+            color=sb_ic
+          )
+        ]
+      )
+    )
+
+
     self.msg_hover_emoji = PopupMenuButton(
         tooltip=None,
         content=Container(
@@ -1746,25 +1787,7 @@ class App(UserControl):
                         ),
                       ),
                     
-                    Container(
-                      # on_click=self.testtest,
-                      on_hover=self.sidebar_btn_hovered,
-                      alignment=alignment.center,
-                      height=40,
-                      width=40,
-                      border_radius=5,
-                      content=Row(
-                        spacing=0,
-                        alignment='center',
-                        controls=[
-                          Icon(
-                            icons.MIC_NONE_OUTLINED,
-                            size=20,
-                            color=sb_ic
-                          )
-                        ]
-                      )
-                    ),
+                    self.send_msg_btn,
 
                   ]
                 )
